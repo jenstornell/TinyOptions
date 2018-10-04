@@ -31,20 +31,6 @@ option::set('myoption', function($args) {
 echo option('myoption')('world'); // Says "Hello world"
 ```
 
-### Static function
-
-To call a static function you need to include the class name like below.
-
-```php
-hook::set($name, 'MyStatic::myhook');
-
-class MyStatic {
-  public static function myhook($args) {
-    // Do something
-  }
-}
-```
-
 ### Object function
 
 To use a function in a class, you need to create an object. Then you need to send the object and the class name as an array, like below.

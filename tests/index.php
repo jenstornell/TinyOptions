@@ -55,9 +55,6 @@ if(option('novalue') != 12) $issues[] = 'options defaults';
 // Options
 if(option('option1') != 'first') $issues[] = 'options';
 
-print_r($GLOBALS);
-
-
 option::unset('option1');
 if(option('option1') == 'first') $issues[] = 'unset string';
 

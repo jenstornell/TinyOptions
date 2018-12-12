@@ -1,25 +1,27 @@
 <?php
 class TinyOptions {
+  public $scope = 'default';
+
   public function setDefaults($defaults) {
-    global $tiny_options_defaults;
-    $tiny_options_defaults = $defaults;
+    global $tiny_options;
+    $tiny_options[$this->scope]['defaults'] = $defaults;
   }
 
   private function getDefault($name) {
-    global $tiny_options_defaults;
-    if(isset($tiny_options_defaults[$name]))
-      return $tiny_options_defaults[$name];
+    global $tiny_options;
+    if(isset($tiny_options[$this->scope]['defaults'][$name]))
+      return $tiny_options[$this->scope]['defaults'][$name];
   }
 
   public function set($name, $value) {
     global $tiny_options;
-    $tiny_options[$name] = $value;
+    $tiny_options[$this->scope]['options'][$name] = $value;
   }
 
   public function get($name, $fallback = null) {
     global $tiny_options;
     
-    if(isset($tiny_options[$name])) return $tiny_options[$name];
+    if(isset($tiny_options[$this->scope]['options'][$name])) return $tiny_options[$this->scope]['options'][$name];
     if(isset($fallback)) return $fallback;
     return $this->getDefault($name);
   }
@@ -27,7 +29,7 @@ class TinyOptions {
   public function unsetString($name) {
     global $tiny_options;
 
-    if(isset($tiny_options[$name])) unset($tiny_options[$name]);
+    if(isset($tiny_options[$this->scope]['options'][$name])) unset($tiny_options[$this->scope]['options'][$name]);
   }
 
   public function unsetArray($names) {
@@ -41,22 +43,27 @@ class TinyOptions {
 
 class option {
   // option::set()
-  public static function set($name, $value) {
+  public static function set($input, $value = null) {
     $TinyOptions = new TinyOptions();
-    $TinyOptions->set($name, $value);
+
+    if(is_string($input)) {
+      $name = $input;
+      $TinyOptions->set($name, $value);
+    } elseif(is_array($input)) {
+      foreach($input as $name => $value) {
+        $TinyOptions->set($name, $value);
+      }
+    }
   }
 
-  public static function unset($name) {
+  // option::unset()
+  public static function unset($data) {
     $TinyOptions = new TinyOptions();
-    $TinyOptions->unsetString($name);
-  }
-}
 
-class options {
-  // options::set()
-  public static function set($options) {
-    foreach($options as $name => $value) {
-      option::set($name, $value);
+    if(is_string($data)) {
+      $TinyOptions->unsetString($data);
+    } elseif(is_array($data)) {
+      $TinyOptions->unsetArray($data);
     }
   }
 
@@ -64,11 +71,6 @@ class options {
   public static function default($defaults) {
     $TinyOptions = new TinyOptions();
     $TinyOptions->setDefaults($defaults);
-  }
-
-  public static function unset($names) {
-    $TinyOptions = new TinyOptions();
-    $TinyOptions->unsetArray($names);
   }
 }
 

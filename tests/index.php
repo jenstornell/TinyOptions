@@ -3,7 +3,7 @@ include __DIR__ . '/../tinyoptions.php';
 
 $issues = [];
 
-options::default([
+option::default([
   'string' => 'my_defalt',
   'notset' => 'whatever',
   'banana' => 'apple'
@@ -39,11 +39,11 @@ class MyObject {
 option::set('object', $object);
 if(option('object')->set('abc') != 'abcdef') $issues[] = 'object';
 
-options::default([
+option::default([
   'novalue' => 12
 ]);
 
-options::set([
+option::set([
   'novalue',
   'option1' => 'first',
   'option2' => 'second'
@@ -55,11 +55,13 @@ if(option('novalue') != 12) $issues[] = 'options defaults';
 // Options
 if(option('option1') != 'first') $issues[] = 'options';
 
+print_r($GLOBALS);
+
 
 option::unset('option1');
 if(option('option1') == 'first') $issues[] = 'unset string';
 
-options::unset(['option1', 'option2']);
+option::unset(['option1', 'option2']);
 if(option('option2') == 'second' && option('option2', 'hello') != 'hello') $issues[] = 'unset array';
 
 print_r($issues);

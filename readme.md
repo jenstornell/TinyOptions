@@ -62,7 +62,7 @@ echo option('myoption', 'Hello default value');
 To make it easier you can also set all the default values in one go with an array. If you also add a second argument, that will override the array.
 
 ```php
-options::default([
+option::default([
   'abc' => 123,
   'def' => 456
 ]);
@@ -107,14 +107,23 @@ options::unset(['myoption', 'anotheroption']);
 echo option('myoption', 'Hello'); // Says "Hello"
 ```
 
+## Prevent collisions
+
+### Rename classes or function
+
+You can rename the `TinyOptions`, the `option` class or the `option` function if you experience collision.
+
+###  Use a namespace
+
+Another way is to add a namespace like `namespace JensTornell\TinyOptions;`. By default to keep it simple, no namespace is used.
+
+### Use the scope variable
+
+The options are temporary put into a global variable. If you have multiple instances of TinyOptions they will overwrite eachother. To prevent this you can change the `scope` variable from `default` to something more unique.
+
 ## Donate
 
 Donate to [DevoneraAB](https://www.paypal.me/DevoneraAB) if you want.
-
-## Additional notes
-
-- To keep it dead simple, namespaces are not used.
-- In case of collision, you can rename the `option` class and the `option` function.
 
 ## Requirements
 

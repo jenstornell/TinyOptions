@@ -1,6 +1,6 @@
 # TinyOptions
 
-*Version: 1.0*
+*Version: 1.2*
 
 TinyOptions is perhaps the smallest PHP options library on earth. Still packed with features.
 
@@ -105,6 +105,25 @@ option::set('myoption', 'Bye');
 option::set('anotheroption', 'Hi');
 options::unset(['myoption', 'anotheroption']);
 echo option('myoption', 'Hello'); // Says "Hello"
+```
+
+## Unset all
+
+Unset without arguments will unset all. Be aware that if you have set defaults, it will use them instead.
+
+```php
+option::set('myoption', 'Bye');
+option::unset();
+echo option('myoption');
+```
+
+## Get all
+
+When using `option()` without arguments you get an array with all the options. If an option is not set but has a default value, that will be used.
+
+```php
+option::set('myoption', 'bye');
+print_r(option());
 ```
 
 ## Prevent collisions

@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.2
+
+- Fixed bug with default values
+- Added `option::unset()` to unset all
+- Added `option()` to get all options
+
 ## 1.1
 
 - Changed `options::default()` to `option::default()`.

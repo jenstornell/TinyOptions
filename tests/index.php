@@ -40,11 +40,12 @@ option::set('object', $object);
 if(option('object')->set('abc') != 'abcdef') $issues[] = 'object';
 
 option::default([
+  'hello' => 'world',
   'novalue' => 12
 ]);
 
 option::set([
-  'novalue',
+  'hello' => 'override',
   'option1' => 'first',
   'option2' => 'second'
 ]);
